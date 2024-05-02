@@ -1,5 +1,7 @@
 package io.zipcoder.tc_spring_poll_application.dto.error;
 
+import java.util.Date;
+
 public class CustomErrorResponses {
 
     private String title;
