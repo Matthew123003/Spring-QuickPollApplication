@@ -1,14 +1,14 @@
-create database poll;
-use poll;
-create table poll(
-poll_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
-question VARCHAR(255) NOT NULL
-);
-create table option(
-option_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
-option_value varchar(255) NOT NULL,
-poll_id Long,
-);
+--create database poll;
+--use poll;
+--create table poll(
+--poll_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
+--question VARCHAR(255) NOT NULL
+--);
+--create table option(
+--option_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
+--option_value varchar(255) NOT NULL,
+--poll_id Long,
+--);
 
 insert into poll (poll_id, question) values (1, 'What is your favorite color?');
 insert into poll (poll_id, question) values (2, 'What is your favorite movie?');
