@@ -1,6 +1,7 @@
 package io.zipcoder.tc_spring_poll_application.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Poll {
@@ -13,17 +14,17 @@ public class Poll {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "POLL_ID")
     @OrderBy
-    private Option options;
+    private Set<Option> options;
 
     public Poll() {
     }
 
-    public Poll(String question, Option options) {
+    public Poll(String question, Set<Option> options) {
         this.question = question;
         this.options = options;
     }
 
-    public Poll(Long id, String question, Option options) {
+    public Poll(Long id, String question, Set<Option> options) {
         this.id = id;
         this.question = question;
         this.options = options;
@@ -45,11 +46,11 @@ public class Poll {
         this.question = question;
     }
 
-    public Option getOptions() {
+    public Set<Option> getOptions() {
         return options;
     }
 
-    public void setOptions(Option options) {
+    public void setOptions(Set<Option> options) {
         this.options = options;
     }
 }
