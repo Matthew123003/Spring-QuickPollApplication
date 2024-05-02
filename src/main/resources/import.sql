@@ -13,3 +13,13 @@ insert into poll (poll_id, question) values (12, 'How tall are you?');
 insert into poll (poll_id, question) values (13, 'How much do you weigh?');
 insert into poll (poll_id, question) values (14, 'What is your hair color?');
 insert into poll (poll_id, question) values (15, 'What is your eye color?');
+
+insert into option (option_id, option_value, poll_id) values (1, 'Red', 1);
+insert into option (option_id, option_value, poll_id) values (2, 'Blue', 1);
+insert into option (option_id, option_value, poll_id) values (3, 'Green', 1);
+insert into option (option_id, option_value, poll_id) values (1, 'The Matrix', 2);
+insert into option (option_id, option_value, poll_id) values (2, 'Fight Club', 2);
+insert into option (option_id, option_value, poll_id) values (3, 'Princess Mononoke', 2);
+insert into option (option_id, option_value, poll_id) values (1, 'Monday', 3);
+insert into option (option_id, option_value, poll_id) values (2, 'Tuesday', 3);
+insert into option (option_id, option_value, poll_id) values (3, 'Wednesday', 3);

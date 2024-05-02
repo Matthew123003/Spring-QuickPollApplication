@@ -34,7 +34,7 @@ public class PollController {
         return new ResponseEntity<>(allPolls, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/polls", method= RequestMethod.GET)
+    @RequestMapping(value="/polls/page", method= RequestMethod.GET)
     @ResponseBody
     public List<Poll> findPaginated(
             @RequestParam(value = "page", defaultValue = "0") int page,
