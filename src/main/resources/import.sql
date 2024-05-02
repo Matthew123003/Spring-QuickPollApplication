@@ -1,3 +1,15 @@
+create database poll;
+use poll;
+create table poll(
+poll_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
+question VARCHAR(255) NOT NULL
+);
+create table option(
+option_id Long PRIMARY KEY NOT NULL AUTO_INCREMENT,
+option_value varchar(255) NOT NULL,
+poll_id Long,
+);
+
 insert into poll (poll_id, question) values (1, 'What is your favorite color?');
 insert into poll (poll_id, question) values (2, 'What is your favorite movie?');
 insert into poll (poll_id, question) values (3, 'What is your favorite day?');
@@ -59,3 +71,5 @@ insert into option (option_id, option_value, poll_id) values (3, 'Blonde', 14);
 insert into option (option_id, option_value, poll_id) values (1, 'Brown', 15);
 insert into option (option_id, option_value, poll_id) values (2, 'Green', 15);
 insert into option (option_id, option_value, poll_id) values (3, 'Blue', 15);
+
+drop database poll;
