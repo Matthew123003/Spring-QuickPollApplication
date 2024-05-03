@@ -27,8 +27,8 @@ public class ComputeResultController {
         this.voteRepository = voteRepository;
     }
 
-    @RequestMapping(value = "/computeresult", method = RequestMethod.GET)
-    public ResponseEntity<?> computeResult(@RequestParam Long pollId) {
+    @RequestMapping(value = "/results/{pollId}", method = RequestMethod.GET)
+    public ResponseEntity<?> computeResult(@RequestParam Long pollId) {//Bad request, need to fix, maybe since i havent done a poll yet
         VoteResult voteResult = new VoteResult();
         Iterable<Vote> allVotes = voteRepository.findVotesByPoll(pollId);
         //TODO: Implement algorithm to count votes
