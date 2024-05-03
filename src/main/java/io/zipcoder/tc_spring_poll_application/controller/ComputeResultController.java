@@ -8,10 +8,7 @@ import io.zipcoder.tc_spring_poll_application.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +25,16 @@ public class ComputeResultController {
     }
 
     @RequestMapping(value = "/results/{pollId}", method = RequestMethod.GET)
-    public ResponseEntity<?> computeResult(@RequestParam Long pollId) {//Bad request, need to fix, maybe since i havent done a poll yet
+    public ResponseEntity<?> computeResult(@PathVariable Long pollId) {//Bad request, need to fix
         VoteResult voteResult = new VoteResult();
         Iterable<Vote> allVotes = voteRepository.findVotesByPoll(pollId);
         //TODO: Implement algorithm to count votes
+
+        // Check if there are no votes for the given poll
+        if (allVotes == null || !allVotes.iterator().hasNext()) {
+            // Return a ResponseEntity with an empty body and HTTP status OK
+            return ResponseEntity.ok().build();
+        }
 
         // Initialize a map to store the count of votes for each option
         Map<Long, Integer> optionVoteCounts = new HashMap<>();
@@ -44,10 +47,7 @@ public class ComputeResultController {
         }
 
         // Calculate the total number of votes
-        int totalVotes = 0;
-        for (Integer count : optionVoteCounts.values()) {
-            totalVotes += count;
-        }
+        int totalVotes = optionVoteCounts.values().stream().mapToInt(Integer::intValue).sum();
 
         // Create a list to store OptionCount objects
         List<OptionCount> optionCounts = new ArrayList<>();
@@ -58,11 +58,12 @@ public class ComputeResultController {
             optionCounts.add(optionCount);
         }
 
-        // Set the totalVotes and results fields of the VoteResult object
-        voteResult.setTotalVotes(totalVotes);
-        voteResult.setResults(optionCounts);
+        // Create a VoteResult object and set the totalVotes and results fields
+        VoteResult voteResults = new VoteResult();
+        voteResults.setTotalVotes(totalVotes);
+        voteResults.setResults(optionCounts);
 
         // Return the computed result in a ResponseEntity with HTTP status OK
-        return new ResponseEntity<VoteResult>(voteResult, HttpStatus.OK);
+        return new ResponseEntity<>(voteResults, HttpStatus.OK);
     }
 }
