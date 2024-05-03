@@ -36,7 +36,7 @@ public class PollController {
 
     @RequestMapping(value="/polls/page", method= RequestMethod.GET)
     @ResponseBody
-    public List<Poll> findPaginated(
+    public List<Poll> findPaginated(//Need to fix algorithm
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             UriComponentsBuilder uriBuilder,
