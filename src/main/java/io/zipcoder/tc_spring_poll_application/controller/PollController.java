@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,25 +37,35 @@ public class PollController {
 
     @RequestMapping(value="/polls/page", method= RequestMethod.GET)
     @ResponseBody
-    public List<Poll> findPaginated(//Need to fix cast problem
+    public ResponseEntity<Iterable<Poll>> findPaginated(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "size", defaultValue = "15") int size,
             UriComponentsBuilder uriBuilder,
             HttpServletResponse response) {
 
-        // Create a Pageable object
-        Pageable pageable = new PageRequest(page, size);
+        // Fetch all polls
+        Iterable<Poll> allPolls = pollRepository.findAll();
 
-        // Find paginated results
-        Page<Poll> resultPage = (Page<Poll>) pollRepository.findAll((Iterable<Long>) pageable);
+        // Create pagination manually
+        List<Poll> paginatedPolls = getPaginatedResults(allPolls, page, size);
 
-        // Check if the requested page is greater than total pages
-        if (page >= resultPage.getTotalPages()) {
-            throw new ResourceNotFoundException();
+        // Return paginated results
+        return ResponseEntity.ok().body(paginatedPolls);
+    }
+
+    // Manually create pagination
+    private List<Poll> getPaginatedResults(Iterable<Poll> allPolls, int page, int size) {
+        List<Poll> paginatedPolls = new ArrayList<>();
+        int start = page * size;
+        int end = start + size;
+        int index = 0;
+        for (Poll poll : allPolls) {
+            if (index >= start && index < end) {
+                paginatedPolls.add(poll);
+            }
+            index++;
         }
-
-        // Return the content of the page
-        return ResponseEntity.ok().body(resultPage.getContent()).getBody();
+        return paginatedPolls;
     }
 
     @RequestMapping(value="/polls", method=RequestMethod.POST)
