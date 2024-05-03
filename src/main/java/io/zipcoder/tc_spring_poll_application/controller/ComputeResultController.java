@@ -25,7 +25,7 @@ public class ComputeResultController {
     }
 
     @RequestMapping(value = "/results/{pollId}", method = RequestMethod.GET)
-    public ResponseEntity<?> computeResult(@PathVariable Long pollId) {//Bad request, need to fix
+    public ResponseEntity<?> computeResult(@PathVariable Long pollId) {
         VoteResult voteResult = new VoteResult();
         Iterable<Vote> allVotes = voteRepository.findVotesByPoll(pollId);
         //TODO: Implement algorithm to count votes
